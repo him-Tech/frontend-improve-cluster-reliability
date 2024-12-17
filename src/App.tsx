@@ -28,6 +28,7 @@ import { IssueId } from "src/model";
 import { WhoBuiltIt } from "src/views/pages/app/whoBuiltIt/WhoBuiltIt";
 import { RequestMaintainerRights } from "src/views/pages/app/requestMaintainerRights/RequestMaintainerRights";
 import { MdConversion } from "src/views/pages/app/mdConversion/MdConversion";
+import { Shop } from "src/views/pages/shop";
 import { IssuesRoute } from "src/views/layout/IssuesRoute";
 import { Projects } from "./views/pages/app/projects/Projects";
 import { Project } from "./views/pages/app/project/Project";
@@ -57,6 +58,7 @@ const App = () => {
         <Routes>
           <Route element={<NonProdRoutes />}>
             <Route path="/blog" element={<MdConversion />} />
+            <Route path="/shop" element={<Shop />} />
             <Route path="/who-built-it" element={<WhoBuiltIt />} />
             <Route path="/project" element={<Project />} />
             <Route path="/buy-dows" element={<Payment />} />

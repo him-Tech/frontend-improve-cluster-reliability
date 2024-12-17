@@ -2,10 +2,17 @@ import { FinancialIssue, IssueId, Owner, Repository, UserId } from "../model";
 import Decimal from "decimal.js";
 import { BackendAPIMock } from "src/__mocks__";
 import {
+  CreatePaymentIntentBody,
+  CreatePaymentIntentParams,
+  CreatePaymentIntentQuery,
+  CreatePaymentIntentResponse,
   FundIssueBody,
   FundIssueParams,
   FundIssueQuery,
   GetAvailableDowResponse,
+  GetDowPricesParams,
+  GetDowPricesQuery,
+  GetDowPricesResponse,
   GetIssueParams,
   GetIssueQuery,
   GetIssueResponse,
@@ -84,6 +91,14 @@ export interface BackendAPI {
   getOwner(params: GetOwnerParams, query: GetOwnerQuery): Promise<GetOwnerResponse | ApiError>;
 
   getRepository(params: GetRepositoryParams, query: GetRepositoryQuery): Promise<GetRepositoryResponse | ApiError>;
+
+  createPaymentIntent(
+    params: CreatePaymentIntentParams,
+    body: CreatePaymentIntentBody,
+    query: CreatePaymentIntentQuery,
+  ): Promise<CreatePaymentIntentResponse | ApiError>;
+
+  getDowPrices(params: GetDowPricesParams, query: GetDowPricesQuery): Promise<GetDowPricesResponse | ApiError>;
 }
 
 class BackendAPIImpl implements BackendAPI {
@@ -148,5 +163,17 @@ class BackendAPIImpl implements BackendAPI {
 
   async getRepository(params: GetRepositoryParams, query: GetRepositoryQuery): Promise<GetRepositoryResponse | ApiError> {
     return handleError(() => axios.get(`${config.api.url}/github/repos/${params.owner}/${params.repo}`, { withCredentials: true }), "getRepository");
+  }
+
+  async createPaymentIntent(
+    params: CreatePaymentIntentParams,
+    body: CreatePaymentIntentBody,
+    query: CreatePaymentIntentQuery,
+  ): Promise<CreatePaymentIntentResponse | ApiError> {
+    return handleError(() => axios.post(`${config.api.url}/shop/create-payment-intent`, body, { withCredentials: true }), "createPaymentIntent");
+  }
+
+  async getDowPrices(params: GetDowPricesParams, query: GetDowPricesQuery): Promise<GetDowPricesResponse | ApiError> {
+    return handleError(() => axios.get(`${config.api.url}/shop/dow-prices`, { withCredentials: true }), "getDowPrices");
   }
 }
